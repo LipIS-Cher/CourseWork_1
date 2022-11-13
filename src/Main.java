@@ -137,7 +137,7 @@ public class Main {
 
     public static void removeEmployee(String OneEmployeeInfoFirstName, String OneEmployeeInfoSecondName, String OneEmployeeInfoLastName) {
         int i = 0;
-        while (i < size) {
+        while (i < size - 1) {
             if (Employees[i].getFirstName().equals(OneEmployeeInfoFirstName) && Employees[i].getSecondName().equals(OneEmployeeInfoSecondName) && Employees[i].getLastName().equals(OneEmployeeInfoLastName)) {
                 Employees[i] = null;
                 if (i != Employees.length - 1) {
@@ -180,27 +180,41 @@ public class Main {
 
     public static void EmployeeMinSalary(){
         float countEmployeeMinSalary = Employees[0].getSalary();
+        String minSalaryFirstName = Employees[0].getFirstName();
+        String minSalarySecondName = Employees[0].getSecondName();
+        String minSalaryLastName = Employees[0].getLastName();
         int i = 0;
         while (i < size) {
             if (countEmployeeMinSalary > Employees[i].getSalary()) {
                 countEmployeeMinSalary = Employees[i].getSalary();
+                minSalaryFirstName = Employees[i].getFirstName();
+                minSalarySecondName = Employees[i].getSecondName();
+                minSalaryLastName = Employees[i].getLastName();
             }
             i++;
         }
-        System.out.println("Минимальная зарплата коллектива составляет - " + countEmployeeMinSalary);
+        System.out.println("Минимальная зарплата составляет - " + countEmployeeMinSalary);
+        System.out.println("Владелец зарплаты - " + minSalaryFirstName + " " + minSalarySecondName + " " + minSalaryLastName);
     }
 
 
     public static void EmployeeMaxSalary(){
         float countEmployeeMaxSalary = Employees[0].getSalary();
+        String maxSalaryFirstName = Employees[0].getFirstName();
+        String maxSalarySecondName = Employees[0].getSecondName();
+        String maxSalaryLastName = Employees[0].getLastName();
         int i = 0;
         while (i < size){
             if (countEmployeeMaxSalary < Employees[i].getSalary()) {
                 countEmployeeMaxSalary = Employees[i].getSalary();
+                maxSalaryFirstName = Employees[i].getFirstName();
+                maxSalarySecondName = Employees[i].getSecondName();
+                maxSalaryLastName = Employees[i].getLastName();
             }
             i++;
         }
-        System.out.println("Максимальная зарплата коллектива составляет - " + countEmployeeMaxSalary);
+        System.out.println("Максимальная зарплата составляет - " + countEmployeeMaxSalary);
+        System.out.println("Владелец зарплаты - " + maxSalaryFirstName + " " + maxSalarySecondName + " " + maxSalaryLastName);
     }
 
 
@@ -216,14 +230,14 @@ public class Main {
 
     public static void MediumSalaryEmployee(){
         float EmployeeAllSalary = 0f;
-        int countEmployee = 0;
+        int countEmployee = 1;
         int i = 0;
         while (i < size) {
             EmployeeAllSalary = EmployeeAllSalary + Employees[i].getSalary();
             countEmployee = i;
             i++;
         }
-        System.out.println("Средняя зарплата коллектива составляет - " + EmployeeAllSalary / countEmployee);
+        System.out.println("Средняя зарплата коллектива составляет - " + EmployeeAllSalary / (countEmployee + 1));
     }
 
     public static void OutputFIO(){
