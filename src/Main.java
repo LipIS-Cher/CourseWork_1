@@ -1,13 +1,21 @@
+import java.util.Random;
 import java.util.Scanner;
 
 
 public class Main {
 
-    private static int size;
-    private static final Employee[] Employees = new Employee[10];
-
-
     public static void main(String[] args) {
+        Employee.addEmployee("Q", "A", "Z", 1, 12000, 1);
+        Employee.addEmployee("W", "S", "X", 2, 15621, 2);
+        Employee.addEmployee("E", "D", "C", 3, 15565, 3);
+        Employee.addEmployee("R", "F", "V", 4, 15651, 4);
+        Employee.addEmployee("T", "G", "B", 5, 53135, 5);
+        Employee.addEmployee("Y", "H", "N", 1, 35135, 6);
+        Employee.addEmployee("U", "J", "M", 2, 11816, 7);
+        Employee.addEmployee("I", "K", "N", 3, 18433, 8);
+        Employee.addEmployee("O", "L", "B", 4, 18666, 9);
+        Employee.addEmployee("P", "A", "Z", 5, 88626, 10);
+
         System.out.println("============= Добро пожаловать в систему =============");
         while (true) {
 
@@ -33,7 +41,7 @@ public class Main {
 
             if (commandCount == 1) {
                 System.out.println("====================================================");
-                Main.printAllContacts();
+                Employee.printAllContacts();
             } else if (commandCount == 2) {
                 System.out.println("===================================================");
                 Scanner FirstName = new Scanner(System.in);
@@ -51,8 +59,10 @@ public class Main {
                 Scanner Salary = new Scanner(System.in);
                 System.out.print("Введите зарплату: ");
                 float SalaryInfo = Salary.nextFloat();
+                Random Id = new Random();
+                int IDInfo = Id.nextInt(100000);
 
-                Main.addEmployee(FirstNameInfo, SecondNameInfo, LastNameInfo, DepartmentInfo, SalaryInfo);
+                Employee.addEmployee(FirstNameInfo, SecondNameInfo, LastNameInfo, DepartmentInfo, SalaryInfo, IDInfo);
 
             } else if (commandCount == 3) {
                 System.out.println("====================================================");
@@ -66,7 +76,7 @@ public class Main {
                 System.out.print("Введите Отчество: ");
                 String LastNameInfo = LastName.next();
 
-                Main.removeEmployee(FirstNameInfo, SecondNameInfo, LastNameInfo);
+                Employee.removeEmployee(FirstNameInfo, SecondNameInfo, LastNameInfo);
             } else if (commandCount == 4) {
                 System.out.println("====================================================");
                 Scanner FirstName = new Scanner(System.in);
@@ -82,7 +92,7 @@ public class Main {
                 System.out.print("Введите новый номер департамента: ");
                 int DepartmentInfo = Department.nextInt();
 
-                Main.changeDepartmentEmployee(FirstNameInfo, SecondNameInfo, LastNameInfo, DepartmentInfo);
+                Employee.changeDepartmentEmployee(FirstNameInfo, SecondNameInfo, LastNameInfo, DepartmentInfo);
             } else if (commandCount == 5) {
                 System.out.println("====================================================");
                 Scanner FirstName = new Scanner(System.in);
@@ -98,162 +108,30 @@ public class Main {
                 System.out.print("Введите зарплату: ");
                 float SalaryInfo = Salary.nextFloat();
 
-                Main.changeSalaryEmployee(FirstNameInfo, SecondNameInfo, LastNameInfo, SalaryInfo);
+                Employee.changeSalaryEmployee(FirstNameInfo, SecondNameInfo, LastNameInfo, SalaryInfo);
             } else if (commandCount == 6) {
                 System.out.println("====================================================");
 
-                Main.EmployeeMinSalary();
+                Employee.EmployeeMinSalary();
             } else if (commandCount == 7) {
                 System.out.println("====================================================");
 
-                Main.EmployeeMaxSalary();
+                Employee.EmployeeMaxSalary();
             } else if (commandCount == 8) {
                 System.out.println("====================================================");
 
-                Main.MonthlySpendSalary();
+                Employee.MonthlySpendSalary();
             } else if (commandCount == 9) {
                 System.out.println("====================================================");
 
-                Main.MediumSalaryEmployee();
+                Employee.MediumSalaryEmployee();
             } else if (commandCount == 10) {
                 System.out.println("====================================================");
 
-                Main.OutputFIO();
+                Employee.OutputFIO();
             } else if (commandCount == 0) {
                 break;
             }
-        }
-    }
-
-    public static void addEmployee(String OneEmployeeInfoFirstName, String OneEmployeeInfoSecondName, String OneEmployeeInfoLastName, int OneEmployeeInfoDepartment, float OneEmployeeInfoSalary) {
-        if (size >= Employees.length) {
-            System.out.println("В базе данных нет места для новой записи.");
-            return;
-        }
-        Employee newEmployee = new Employee(OneEmployeeInfoFirstName, OneEmployeeInfoSecondName, OneEmployeeInfoLastName, OneEmployeeInfoDepartment, OneEmployeeInfoSalary);
-        Employees[size++] = newEmployee;
-        System.out.println("Запись создана.");
-    }
-
-    public static void removeEmployee(String OneEmployeeInfoFirstName, String OneEmployeeInfoSecondName, String OneEmployeeInfoLastName) {
-        int i = 0;
-        while (i < size - 1) {
-            if (Employees[i].getFirstName().equals(OneEmployeeInfoFirstName) && Employees[i].getSecondName().equals(OneEmployeeInfoSecondName) && Employees[i].getLastName().equals(OneEmployeeInfoLastName)) {
-                Employees[i] = null;
-                if (i != Employees.length - 1) {
-                    System.arraycopy (Employees, i + 1, Employees, i, size - i);
-                }
-                size--;
-                System.out.println("Запись " + OneEmployeeInfoFirstName + " " + OneEmployeeInfoSecondName + " " + OneEmployeeInfoLastName + " была удалена.");
-                return;
-            }
-            i++;
-        }
-    }
-
-
-    public static void changeDepartmentEmployee(String OneEmployeeInfoFirstName, String OneEmployeeInfoSecondName, String OneEmployeeInfoLastName, int OneEmployeeInfoDepartment){
-        int i = 0;
-        while (i < size) {
-            if (Employees[i].getFirstName().equals(OneEmployeeInfoFirstName) && Employees[i].getSecondName().equals(OneEmployeeInfoSecondName) && Employees[i].getLastName().equals(OneEmployeeInfoLastName)) {
-                Employees[i].SetDepartment(OneEmployeeInfoDepartment);
-                return;
-            }
-            i++;
-        }
-        System.out.println("Депортамент " + OneEmployeeInfoFirstName + " " + OneEmployeeInfoSecondName + " " + OneEmployeeInfoLastName + " был изменён.");
-    }
-
-
-    public static void changeSalaryEmployee(String OneEmployeeInfoFirstName, String OneEmployeeInfoSecondName, String OneEmployeeInfoLastName, float OneEmployeeInfoSalary){
-        int i = 0;
-        while (i < size){
-            if (Employees[i].getFirstName().equals(OneEmployeeInfoFirstName) && Employees[i].getSecondName().equals(OneEmployeeInfoSecondName) && Employees[i].getLastName().equals(OneEmployeeInfoLastName)) {
-                Employees[i].SetSalary(OneEmployeeInfoSalary);
-                return;
-            }
-            i++;
-        }
-        System.out.println("Зарплата " + OneEmployeeInfoFirstName + " " + OneEmployeeInfoSecondName + " " + OneEmployeeInfoLastName + " была изменёна.");
-    }
-
-
-    public static void EmployeeMinSalary(){
-        float countEmployeeMinSalary = Employees[0].getSalary();
-        String minSalaryFirstName = Employees[0].getFirstName();
-        String minSalarySecondName = Employees[0].getSecondName();
-        String minSalaryLastName = Employees[0].getLastName();
-        int i = 0;
-        while (i < size) {
-            if (countEmployeeMinSalary > Employees[i].getSalary()) {
-                countEmployeeMinSalary = Employees[i].getSalary();
-                minSalaryFirstName = Employees[i].getFirstName();
-                minSalarySecondName = Employees[i].getSecondName();
-                minSalaryLastName = Employees[i].getLastName();
-            }
-            i++;
-        }
-        System.out.println("Минимальная зарплата составляет - " + countEmployeeMinSalary);
-        System.out.println("Владелец зарплаты - " + minSalaryFirstName + " " + minSalarySecondName + " " + minSalaryLastName);
-    }
-
-
-    public static void EmployeeMaxSalary(){
-        float countEmployeeMaxSalary = Employees[0].getSalary();
-        String maxSalaryFirstName = Employees[0].getFirstName();
-        String maxSalarySecondName = Employees[0].getSecondName();
-        String maxSalaryLastName = Employees[0].getLastName();
-        int i = 0;
-        while (i < size){
-            if (countEmployeeMaxSalary < Employees[i].getSalary()) {
-                countEmployeeMaxSalary = Employees[i].getSalary();
-                maxSalaryFirstName = Employees[i].getFirstName();
-                maxSalarySecondName = Employees[i].getSecondName();
-                maxSalaryLastName = Employees[i].getLastName();
-            }
-            i++;
-        }
-        System.out.println("Максимальная зарплата составляет - " + countEmployeeMaxSalary);
-        System.out.println("Владелец зарплаты - " + maxSalaryFirstName + " " + maxSalarySecondName + " " + maxSalaryLastName);
-    }
-
-
-    public static void MonthlySpendSalary(){
-        float EmployeeAllSalary = 0f;
-        int i = 0;
-        while (i < size){
-            EmployeeAllSalary = EmployeeAllSalary + Employees[i].getSalary();
-            i++;
-        }
-        System.out.println("Общий расход на зарплаты за месяц составляет - " + EmployeeAllSalary);
-    }
-
-    public static void MediumSalaryEmployee(){
-        float EmployeeAllSalary = 0f;
-        int countEmployee = 1;
-        int i = 0;
-        while (i < size) {
-            EmployeeAllSalary = EmployeeAllSalary + Employees[i].getSalary();
-            countEmployee = i;
-            i++;
-        }
-        System.out.println("Средняя зарплата коллектива составляет - " + EmployeeAllSalary / (countEmployee + 1));
-    }
-
-    public static void OutputFIO(){
-        int i = 0;
-        while (i < size){
-            System.out.println((i + 1) + " - " + Employees[i].getFirstName() + " " + Employees[i].getSecondName() + " " + Employees[i].getLastName());
-            i++;
-        }
-    }
-
-    public static void printAllContacts() {
-        int i = 0;
-        while (i < size) {
-            Employee employee = Employees[i];
-            System.out.println((i + 1) + ": " + employee.getFirstName() + " " + employee.getSecondName() + " " + employee.getLastName() + " / " + employee.getDepartment() + " / " + employee.getSalary());
-            i++;
         }
     }
 }
