@@ -3,9 +3,7 @@ import java.util.Objects;
 public class Employee {
     // private field's
     private final String FirstName;
-
     private final String SecondName;
-
     private final String LastName;
     private int Department;
     private float Salary;
